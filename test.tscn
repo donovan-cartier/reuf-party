@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://cct1ibt7jiary"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_0cy78"]
+[ext_resource type="PackedScene" uid="uid://bobo3k0okl7xs" path="res://sphere.tscn" id="2_fbe3l"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4ro4"]
+sky_top_color = Color(0, 0.815686, 0.862745, 1)
+sky_horizon_color = Color(0, 0.729412, 0.866667, 1)
+sky_curve = 0.160766
+ground_bottom_color = Color(7.70092e-06, 0.730153, 0.865124, 1)
+ground_horizon_color = Color(5.77569e-07, 0.816378, 0.862471, 1)
+ground_curve = 0.000312499
+
+[sub_resource type="Sky" id="Sky_7d5xt"]
+sky_material = SubResource("ProceduralSkyMaterial_h4ro4")
+
+[sub_resource type="Environment" id="Environment_ywqcm"]
+background_mode = 2
+sky = SubResource("Sky_7d5xt")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ka5pu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_thr7a"]
+size = Vector3(19.9616, 1, 18.2125)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_0cy78")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.704461, 0.709743, 0, -0.709743, 0.704461, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ywqcm")
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="RigidBody3D3" parent="Objects" instance=ExtResource("2_fbe3l")]
+
+[node name="RigidBody3D4" parent="Objects" instance=ExtResource("2_fbe3l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0127323, 2.26416, 0.759516)
+
+[node name="RigidBody3D5" parent="Objects" instance=ExtResource("2_fbe3l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20229, 3.32108, 0.759516)
+linear_velocity = Vector3(5, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.61814, 0)
+
+[node name="Node3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 18.27, 0, 0, 0)
+mesh = SubResource("BoxMesh_ka5pu")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_thr7a")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.940721, 0.339181, 0, -0.339181, 0.940721, 0, 3.70391, 4.64462)
+fov = 48.3
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 4

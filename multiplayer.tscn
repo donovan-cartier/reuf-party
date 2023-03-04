@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf2877yilj18s"]
+
+[ext_resource type="Script" path="res://multiplayer_ui.gd" id="1_426dw"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_426dw")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://test.tscn")
+spawn_path = NodePath("../Level")
+spawn_limit = 1
+
+[node name="Multiplayer_UI" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Multiplayer_UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Multiplayer_UI/HBoxContainer"]
+layout_mode = 2
+text = "Connect:"
+
+[node name="Host" type="Button" parent="Multiplayer_UI/HBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="Connect" type="Button" parent="Multiplayer_UI/HBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Remote" type="LineEdit" parent="Multiplayer_UI/HBoxContainer"]
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "IP"
+expand_to_text_length = true
+
+[connection signal="pressed" from="Multiplayer_UI/HBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Multiplayer_UI/HBoxContainer/Connect" to="." method="_on_connect_pressed"]

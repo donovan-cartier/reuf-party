@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bobo3k0okl7xs"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lc227"]
+bounce = 0.75
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_in10p"]
+radius = 0.356311
+
+[sub_resource type="SphereMesh" id="SphereMesh_2a5kd"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1agjm"]
+properties/0/path = NodePath(".:linear_velocity")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:angular_velocity")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/sync = true
+
+[node name="RigidBody3D3" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4088, 2.26416, 1.25707)
+physics_material_override = SubResource("PhysicsMaterial_lc227")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_in10p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.68319, 0, 0, 0, 0.68319, 0, 0, 0, 0.68319, 0, 0, 0)
+mesh = SubResource("SphereMesh_2a5kd")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1agjm")
